@@ -7,3 +7,6 @@ Spring initializer -> create new project (dependency - spring web)
 		}
 
 
+2. Service COnsumer (day1.demo2.RestConsumer)
+	Write client to  test earlier provider
+	
