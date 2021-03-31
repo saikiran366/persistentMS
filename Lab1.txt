@@ -8,5 +8,25 @@ Spring initializer -> create new project (dependency - spring web)
 
 
 2. Service COnsumer (day1.demo2.RestConsumer)
-	Write client to  test earlier provider
+	Create a maven project (simple)
+		Modify pom file to include 
+		<dependencies>
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-web -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>5.3.5</version>
+		</dependency>
+	</dependencies>
+	
+	Write a class RestConsumer with main method
+		public static void main(String[] args) {
+			// TODO Auto-generated method stub
+			RestTemplate resttemplate = new RestTemplate();
+			String str = resttemplate.getForObject("http://localhost:8080", String.class);
+			System.out.println(str);
+		}
+
+	
+	
 	
