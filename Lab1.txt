@@ -55,3 +55,55 @@ Lab 3  - Spring Eureka Server
 		
 	Run application
 		http://localhost:8761
+		
+	Create a maven app
+	
+	Spring Initializer
+		Day1.demo3.RegisterEurekaClient, Dependency - EurekaClient, Web
+	
+	Write RegisterEurekaClientApplication.java
+	
+		package demo;
+
+		import org.springframework.beans.factory.annotation.Autowired;
+		import org.springframework.boot.SpringApplication;
+		import org.springframework.boot.autoconfigure.SpringBootApplication;
+		import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+
+		import com.netflix.discovery.DiscoveryClient;
+
+		@SpringBootApplication
+		@EnableEurekaClient
+		public class RegisterEurekaClientApplication {
+
+			public static void main(String[] args) {
+				SpringApplication.run(RegisterEurekaClientApplication.class, args);
+			}
+
+		}
+
+	Write MyController.java
+		package demo;
+
+		import org.springframework.web.bind.annotation.GetMapping;
+		import org.springframework.web.bind.annotation.RestController;
+
+		@RestController
+		public class MyController {
+			@GetMapping(value="/myapp")
+			public String hello(){
+				System.out.println("hello from MyController invoked ");
+				return "<h1>Hello</h1>";
+			}
+		}
+
+	Write application.properties
+	server.port=8086
+	spring.application.name=client1
+	eureka.client.register-with-eureka=true
+	eureka.client.fetch-registry=false
+
+	Run the application
+	Test - http://localhost:8761	
+			in application should be able to see client1 
+			
