@@ -107,3 +107,20 @@ Lab 3  - Spring Eureka Server
 	Test - http://localhost:8761	
 			in application should be able to see client1 
 			
+
+
+
+Create Maven Aapp - Day1.demo3.FetchEurekaClient
+		Maven Dependencies -> EurekaClient, web
+	
+	Write FetchEurekaClientApplication.java
+		@EnableEurekaClient
+	Application.properites
+	server.port=8080
+	spring.application.name=client2
+	eureka.client.register-with-eureka=false
+	eureka.client.fetch-registry=true
+
+	Write MyController to show a simple message 
+	
+
