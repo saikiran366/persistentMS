@@ -1,0 +1,9 @@
+Eclipse -> Runtime - jdk (1.8)
+Spring initializer -> create new project (dependency - spring web)
+1. Service Provider (day1.demo1.RestProvider)
+	Create a project , download zip , extract in current workspace and write simple code as server 
+		public String hello(){
+			return "<html><h1>Hello World !!</h1></html>";
+		}
+
+
