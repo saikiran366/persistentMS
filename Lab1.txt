@@ -124,3 +124,71 @@ Create Maven Aapp - Day1.demo3.FetchEurekaClient
 	Write MyController to show a simple message 
 	
 
+Create Maven Aapp - Day1.demo3.FetchEurekaClient
+		Maven Dependencies -> EurekaClient, web
+	
+	Create FetchEurekaClientApplication.java
+		package demo;
+
+		import org.springframework.beans.factory.annotation.Autowired;
+		import org.springframework.boot.SpringApplication;
+		import org.springframework.boot.autoconfigure.SpringBootApplication;
+		import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+		import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+		import org.springframework.context.annotation.Bean;
+		import org.springframework.web.client.RestTemplate;
+
+		import com.netflix.discovery.DiscoveryClient;
+
+		@SpringBootApplication
+		@EnableEurekaClient
+		public class FetchEurekaClientApplication {
+
+			@LoadBalanced
+			@Bean
+			public RestTemplate resttemplate(){
+				return new RestTemplate();
+			}
+			
+			public static void main(String[] args) {
+				SpringApplication.run(FetchEurekaClientApplication.class, args);
+			}
+
+		}
+
+	Create MyController.java
+		package demo;
+
+		import org.springframework.beans.factory.annotation.Autowired;
+		import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+		import org.springframework.web.bind.annotation.GetMapping;
+		import org.springframework.web.bind.annotation.RestController;
+		import org.springframework.web.client.RestTemplate;
+
+		@RestController
+		public class MyController {
+			@Autowired
+			private RestTemplate resttemplate;
+			
+			@GetMapping(value="/")
+			public String hello(){
+				System.out.println("hello from MyController invoked ");
+			//invoke Client1 url and then return that data as String....
+				
+				String str = resttemplate.getForObject("http://client1/myapp", String.class);
+				return "<h1>Getting data from Client 1 <h1><br/> The Data is  "+ str;
+			}
+		}
+
+	application.properties
+		server.port=80
+		spring.application.name=client2
+		eureka.client.register-with-eureka=false
+		eureka.client.fetch-registry=true
+
+	Test -> http://localhost:80
+	Modify Register code to change port and color of h1 tag, run
+	Test -> http://localhost:80 (output should be load balanced)
+	
+	
+	
