@@ -1,1 +1,8 @@
 https://eng.uber.com/microservice-architecture/
+
+https://www.geeksforgeeks.org/monolithic-vs-microservices-architecture/
+  What kind of projects 
+  Development
+  Deployment 
+  Network
+  
