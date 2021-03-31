@@ -7,3 +7,7 @@ https://www.geeksforgeeks.org/monolithic-vs-microservices-architecture/
   Network
   
 https://boosthigh.com/monolithic-vs-microservices-architecture/
+
+https://www.cuelogic.com/blog/microservices-in-practice-from-architecture-to-deployment
+
+https://martinfowler.com/microservices/
