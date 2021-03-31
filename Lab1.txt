@@ -1,13 +1,13 @@
 Eclipse -> Runtime - jdk (1.8)
 Spring initializer -> create new project (dependency - spring web)
-1. Service Provider (day1.demo1.RestProvider)
+Lab 1. Service Provider (day1.demo1.RestProvider)
 	Create a project , download zip , extract in current workspace and write simple code as server 
 		public String hello(){
 			return "<html><h1>Hello World !!</h1></html>";
 		}
 
 
-2. Service COnsumer (day1.demo2.RestConsumer)
+Lab 2. Service COnsumer (day1.demo2.RestConsumer)
 	Create a maven project (simple)
 		Modify pom file to include 
 		<dependencies>
@@ -27,6 +27,31 @@ Spring initializer -> create new project (dependency - spring web)
 			System.out.println(str);
 		}
 
+Lab 3  - Spring Eureka Server
+	Spring Initializer
+		Day1.demo3.EurekaServer, Dependency - Eureka Server
+		
+	Create demo.EurekaServerApplication.java 
+		package demo;
+
+		import org.springframework.boot.SpringApplication;
+		import org.springframework.boot.autoconfigure.SpringBootApplication;
+		import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
+
+		@SpringBootApplication
+		@EnableEurekaServer
+		public class EurekaServerApplication {
+
+			public static void main(String[] args) {
+				SpringApplication.run(EurekaServerApplication.class, args);
+			}
+
+		}
 	
-	
-	
+	Create application.properties (src/main/resources)
+		server.port=8761
+		eureka.client.register-with-eureka=false
+		eureka.client.fetch-registry=false
+		
+	Run application
+		http://localhost:8761
