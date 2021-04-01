@@ -3,10 +3,16 @@ Lab 1 - Create two services to return String
     Day2.demo1.Service1 (8085)
     Day2.demo2.Service2 (8086)
     -> RestController with GetMapping and return Strings
- 
+   Modify application.yml file give name for both services(different ports)
+server:
+ port: 8085
+spring: 
+ application:
+  name: say-hello
+
 								
-	Create a maven project
-		Spring Initializer
+   Create a maven project
+	Spring Initializer
 			day2.demo3.LoadBalancerClient 
 				Dependencies -> Cloud Loadbalancer
 								Web
@@ -53,5 +59,103 @@ Lab 1 - Create two services to return String
 						return "hello from LBClientApp<br/>"+  str.block();
 					}
 				}
+		Current MyController is talking to only one instace -http://localhost:8085/emps
+		To enable client side load balancer 
+		
+		Modify LBClientApplication to include WebClient.Builder which is loadBalanced
+		
+			package demo;
 
-			
+			import org.springframework.boot.SpringApplication;
+			import org.springframework.boot.autoconfigure.SpringBootApplication;
+			import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+			import org.springframework.cloud.client.loadbalancer.reactive.ReactorLoadBalancerExchangeFilterFunction;
+			import org.springframework.context.annotation.Bean;
+			import org.springframework.web.reactive.function.client.WebClient;
+
+			@SpringBootApplication
+			public class LBClientApplication {
+
+				 @LoadBalanced
+				 @Bean
+				  WebClient.Builder webClientBuilder() {
+				    return WebClient.builder();
+				  }
+
+				public static void main(String[] args) {
+					SpringApplication.run(LBClientApplication.class, args);
+				}
+
+			}
+		
+		Modify MyController to have Builder autowired and dynamic url
+			package demo;
+
+			import org.springframework.beans.factory.annotation.Autowired;
+			import org.springframework.http.HttpMethod;
+			import org.springframework.web.bind.annotation.GetMapping;
+			import org.springframework.web.bind.annotation.RestController;
+			import org.springframework.web.reactive.function.client.WebClient;
+
+			import reactor.core.publisher.Mono;
+
+			@RestController
+			public class MyController {
+				@Autowired
+				private WebClient.Builder builder;
+
+				@GetMapping
+				public String hello(){
+					Mono<String> str = builder.build().get().uri("http://say-hello/emps").retrieve().bodyToMono(String.class);
+					return "hello from LBClientApp<br/>"+  str.block();
+				}
+			}
+
+		Add  SayHelloConfiguration.java file 
+		
+			package demo;
+
+			import java.util.Arrays;
+			import java.util.List;
+
+			import reactor.core.publisher.Flux;
+
+			import org.springframework.cloud.client.DefaultServiceInstance;
+			import org.springframework.cloud.client.ServiceInstance;
+			import org.springframework.cloud.loadbalancer.core.ServiceInstanceListSupplier;
+			import org.springframework.context.annotation.Bean;
+			import org.springframework.context.annotation.Configuration;
+			import org.springframework.context.annotation.Primary;
+
+			@Configuration
+			public class SayHelloConfiguration {
+
+			  @Bean
+			  @Primary
+			  ServiceInstanceListSupplier serviceInstanceListSupplier() {
+			    return new DemoServiceInstanceListSuppler("say-hello");
+			  }
+
+			}
+
+			class DemoServiceInstanceListSuppler implements ServiceInstanceListSupplier {
+
+			  private final String serviceId;
+
+			  DemoServiceInstanceListSuppler(String serviceId) {
+			    this.serviceId = serviceId;
+			  }
+
+			  @Override
+			  public String getServiceId() {
+			    return serviceId;
+			  }
+
+			  @Override
+			  public Flux<List<ServiceInstance>> get() {
+			    return Flux.just(Arrays
+				.asList(
+					new DefaultServiceInstance(serviceId + "1", serviceId, "localhost", 8085, false),
+				    new DefaultServiceInstance(serviceId + "2", serviceId, "localhost", 8086, false)));
+			  }
+			}
