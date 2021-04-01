@@ -11,3 +11,5 @@ https://boosthigh.com/monolithic-vs-microservices-architecture/
 https://www.cuelogic.com/blog/microservices-in-practice-from-architecture-to-deployment
 
 https://martinfowler.com/microservices/
+
+https://qconsf.com/sf2014/system/files/presentation-slides/QConSF-MicroServices-IPC-Netflix-Sudhir-2014.pptx
