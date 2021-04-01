@@ -1,3 +1,72 @@
+Lab 3 - Circuit Breaker
+	Maven ->Day2.demo5.CircuitBreaker
+	Resilience4J
+	Web
+	Reactive Web
+	
+	Write CircuitBreakerApplication.java
+	
+		package demo;
+
+		import org.springframework.boot.SpringApplication;
+		import org.springframework.boot.autoconfigure.SpringBootApplication;
+		import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+		import org.springframework.cloud.client.loadbalancer.reactive.ReactorLoadBalancerExchangeFilterFunction;
+		import org.springframework.context.annotation.Bean;
+		import org.springframework.web.reactive.function.client.WebClient;
+
+		@SpringBootApplication
+		public class CircuitBreakerApplication {
+		 
+			public static void main(String[] args) {
+				SpringApplication.run(CircuitBreakerApplication.class, args);
+			}
+
+		}
+			
+			
+	Write MyController
+		package demo;
+
+		import java.util.Date;
+		import org.springframework.beans.factory.annotation.Autowired;
+		import org.springframework.cloud.client.circuitbreaker.ReactiveCircuitBreaker;
+		import org.springframework.cloud.client.circuitbreaker.ReactiveCircuitBreakerFactory;
+		import org.springframework.http.HttpMethod;
+		import org.springframework.web.bind.annotation.GetMapping;
+		import org.springframework.web.bind.annotation.RestController;
+		import org.springframework.web.reactive.function.client.WebClient;
+		import reactor.core.publisher.Mono;
+
+		@RestController
+		public class MyController {
+			
+
+			  private final WebClient webClient;
+			  private final ReactiveCircuitBreaker demo1CircuitBreaker;
+			  
+			  public  MyController(ReactiveCircuitBreakerFactory circuitBreakerFactory) {
+
+						this.webClient = WebClient.builder().baseUrl("http://localhost:8080").build();
+						this.demo1CircuitBreaker = circuitBreakerFactory.create("recommended");
+					  }
+			
+			
+			@GetMapping
+			public String hello(){
+				System.out.println(" in hello of MyController " + new Date());
+				Mono<String> str  =  demo1CircuitBreaker.run(
+						  webClient.get().uri("/").retrieve().bodyToMono(String.class), 
+						  throwable -> {
+								System.out.println(("Error making request to demo1 service" +  throwable));
+								return Mono.just("MyController in CircuitBreaker");
+					});
+				return str.block();
+			
+			}
+		}
+
+----------------------------
 Lab 2 - Feign Client
 	Modify Day1.demo1.RestProvider
 		Create Emp.java
