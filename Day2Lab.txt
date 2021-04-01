@@ -13,21 +13,44 @@ Lab 1 - Create two services to return String
 								Reactive Web
 								
 			Write LBClientApplication.java
-			
+				package demo;
+
+				import org.springframework.boot.SpringApplication;
+				import org.springframework.boot.autoconfigure.SpringBootApplication;
+				import org.springframework.cloud.client.loadbalancer.reactive.ReactorLoadBalancerExchangeFilterFunction;
+				import org.springframework.web.reactive.function.client.WebClient;
+
+				@SpringBootApplication
+				public class LBClientApplication {
+
+					public static void main(String[] args) {
+						SpringApplication.run(LBClientApplication.class, args);
+					}
+
+				}
+
 			Write MyController.java
-			@RestController
+				package demo;
+
+				import org.springframework.beans.factory.annotation.Autowired;
+				import org.springframework.http.HttpMethod;
+				import org.springframework.web.bind.annotation.GetMapping;
+				import org.springframework.web.bind.annotation.RestController;
+				import org.springframework.web.reactive.function.client.WebClient;
+
+				import reactor.core.publisher.Mono;
+
+				@RestController
 				public class MyController {
-					
+
 					@GetMapping
 					public String hello(){
-						WebClient client = WebClient.builder()
-								  .baseUrl("http://localhost:8085/emps")
-								  .build();
-								 /* .defaultCookie("cookieKey", "cookieValue")
-								  .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE) 
-								  .defaultUriVariables(Collections.singletonMap("url", "http://localhost:8080")) */
-						client.get().exchangeToMono((r)->r.bodyToMono(String.class));
-						return "h";
+						WebClient webClient = WebClient.create("http://localhost:8085/emps");
+
+						Mono<String> str = webClient.get()
+							.retrieve()
+							.bodyToMono(String.class);
+						return "hello from LBClientApp<br/>"+  str.block();
 					}
 				}
 
