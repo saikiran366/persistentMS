@@ -1,0 +1,6 @@
+Lab 1 - Create two services to return String 
+  two maven projects
+    Day2.demo1.Service1 (8085)
+    Day2.demo2.Service2 (8086)
+    -> RestController with GetMapping and return Strings
+ 
