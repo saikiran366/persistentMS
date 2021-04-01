@@ -4,6 +4,7 @@ Lab 1 - Create two services to return String
     Day2.demo2.Service2 (8086)
     -> RestController with GetMapping and return Strings
  
+								
 	Create a maven project
 		Spring Initializer
 			day2.demo3.LoadBalancerClient 
@@ -11,3 +12,23 @@ Lab 1 - Create two services to return String
 								Web
 								Reactive Web
 								
+			Write LBClientApplication.java
+			
+			Write MyController.java
+			@RestController
+				public class MyController {
+					
+					@GetMapping
+					public String hello(){
+						WebClient client = WebClient.builder()
+								  .baseUrl("http://localhost:8085/emps")
+								  .build();
+								 /* .defaultCookie("cookieKey", "cookieValue")
+								  .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE) 
+								  .defaultUriVariables(Collections.singletonMap("url", "http://localhost:8080")) */
+						client.get().exchangeToMono((r)->r.bodyToMono(String.class));
+						return "h";
+					}
+				}
+
+			
