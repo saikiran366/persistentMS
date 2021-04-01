@@ -1,3 +1,128 @@
+Lab 2 - Feign Client
+	Modify Day1.demo1.RestProvider
+		Create Emp.java
+		public class Emp {
+			private int empno;
+			private String ename;
+			private double salary;
+			
+			+ getters/setters + toString
+		}
+		
+		Change MyController
+			package demo;
+
+			import java.util.ArrayList;
+			import java.util.List;
+
+			import org.springframework.web.bind.annotation.GetMapping;
+			import org.springframework.web.bind.annotation.PostMapping;
+			import org.springframework.web.bind.annotation.RestController;
+
+			@RestController(value="/")
+			public class MyController {
+				List<Emp> list  = new ArrayList<>();
+				public MyController() {
+					Emp e1 = new Emp();
+					e1.setEmpno(1);e1.setEname("Vaishali"); e1.setSalary(1111);
+					list.add(e1);
+				}
+				
+				@PostMapping(value="/emps")
+				public String add(Emp e){
+					System.out.println("add invoked with " + e);
+					list.add(e);
+					return "success";
+				}
+				@GetMapping(value="/emps")
+				public List<Emp> list(){
+					System.out.println("List invoked ");
+					return list;
+				}
+				
+				@GetMapping
+				public String hello(){
+					return "<html><h1>Hello World !!</h1></html>";
+				}
+			}
+
+
+
+	Maven project -> Day2.demo4.OpenFeignClient
+		Depend - Web, OpenFeign
+	Copy Emp from demo1
+	create Demo1RestProviderClient.java
+		package demo;
+
+		import java.util.List;
+
+		import org.springframework.cloud.openfeign.FeignClient;
+		import org.springframework.web.bind.annotation.GetMapping;
+		import org.springframework.web.bind.annotation.PostMapping;
+
+		@FeignClient(name= "demo1", url="http://localhost:8080")
+		public interface Demo1RestProviderClient {
+			@PostMapping(value="/emps")
+			public String add(Emp e);
+
+			@GetMapping(value="/emps")
+			public List<Emp> list();
+					
+			@GetMapping(value="/")
+					public String hello();
+
+		}
+	
+	
+	Create MyController
+		package demo;
+
+		import java.util.List;
+
+		import org.springframework.beans.factory.annotation.Autowired;
+		import org.springframework.web.bind.annotation.GetMapping;
+		import org.springframework.web.bind.annotation.RestController;
+
+		@RestController
+		public class MyController {
+			@Autowired
+			private Demo1RestProviderClient client;
+			
+			@GetMapping
+			public String process(){
+				List<Emp> list = client.list();
+				System.out.println("in process " + list);
+				return "<h1>"+ list.size() + "</h1>";
+			}
+		}
+
+	Create OpenFeignClientApplication
+	
+		package demo;
+		import org.springframework.beans.factory.annotation.Autowired;
+		import org.springframework.boot.SpringApplication;
+		import org.springframework.boot.autoconfigure.SpringBootApplication;
+		import org.springframework.cloud.openfeign.EnableFeignClients;
+
+		@SpringBootApplication
+		@EnableFeignClients
+		public class OpenFeignClientApplication {
+			
+			public static void main(String[] args) {
+					SpringApplication.run(OpenFeignClientApplication.class, args);
+				  }
+		}
+
+
+
+
+
+
+
+
+
+
+------------------------------------------
 Lab 1 - Create two services to return String 
   two maven projects
     Day2.demo1.Service1 (8085)
