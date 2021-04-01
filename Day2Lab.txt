@@ -4,3 +4,10 @@ Lab 1 - Create two services to return String
     Day2.demo2.Service2 (8086)
     -> RestController with GetMapping and return Strings
  
+	Create a maven project
+		Spring Initializer
+			day2.demo3.LoadBalancerClient 
+				Dependencies -> Cloud Loadbalancer
+								Web
+								Reactive Web
+								
