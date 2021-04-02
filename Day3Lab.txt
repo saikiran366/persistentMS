@@ -2,5 +2,44 @@ Lab 1 - Dependency (Day1.demo1.RestProvider, Day2.demo1.Service1
 	- Maven - Day3.demo6.ApiGateway
 		Dependency - API Gateway
 	
-	https://spring.io/guides/gs/gateway/ -> http://localhost:8080, http://localhost:8085
+		Write ApiGatewayApplication.java
+			package demo;
+
+			import org.springframework.boot.SpringApplication;
+			import org.springframework.boot.autoconfigure.SpringBootApplication;
+			import org.springframework.cloud.gateway.route.RouteLocator;
+			import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
+			import org.springframework.context.annotation.Bean;
+
+			@SpringBootApplication
+
+			public class ApiGatewayApplication {
+
+
+				@Bean
+				public RouteLocator  myRoutes(RouteLocatorBuilder builder) {
+					return builder.routes()
+						.route(p -> p
+							.path("demo1")
+							.uri("http://localhost:8080"))
+						.route(p -> p
+							.path("demo2")
+							.uri("http://localhost:8085"))
+						.build();
+				}
+				
+				public static void main(String[] args) {
+					SpringApplication.run(ApiGatewayApplication.class, args);
+				}
+
+			}
+
+	Observe error (redirection)
+	
+	Modify context path  (either yml file or properties file
+		Day1.demo1.RestProvider
+			server.contextPath=/demo1
+		Day2.demo1.Service1 
+			server.contextPath=/demo2
+		
 	
