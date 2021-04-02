@@ -1,3 +1,54 @@
+Lab 3 - Security 
+	Create maven app - Day3.demo4.OAuthClient
+		dependency - web, security, oauth client
+	Create OAuthClientApplication
+		package demo;
+
+		import org.springframework.boot.SpringApplication;
+		import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+		@SpringBootApplication
+		public class OAuthClientApplication {
+
+			public static void main(String[] args) {
+				// TODO Auto-generated method stub
+				SpringApplication.run(OAuthClientApplication.class, args);
+			}
+
+		}
+	Create MyController
+		package demo;
+
+		import org.springframework.web.bind.annotation.GetMapping;
+		import org.springframework.web.bind.annotation.RestController;
+
+		@RestController(value="/")
+		public class MyController {
+
+			@GetMapping(value="/")
+			public String base(){
+				String str= "<h1>Index Page</h1>";
+				str += "<h1><a href='admin/page1'>Page1</h1>";
+				str += "<h1><a href='admin/page2'>Page2</h1>";
+				return str;
+			}
+			
+			@GetMapping(value="/admin/page1")
+			public String page1(){
+				return "<h1>Page1</h1>";
+				
+			}
+			@GetMapping(value="/admin/page2")
+			public String page2(){
+				return "<h1>Page2</h1>";
+			}
+		}
+	Run -> will ask to login/password
+	
+	
+	
+	
+---------------------------------------------------------
 Lab 2 - Maven project
 	Day3.demo2.ConfigServer -> dependency - Config Server
 	
