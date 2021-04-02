@@ -1,3 +1,32 @@
+Lab 2 - Maven project
+	Day3.demo2.ConfigServer -> dependency - Config Server
+	
+	Create ConfigServerApplication.java
+		package demo;
+
+		import org.springframework.boot.SpringApplication;
+		import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+		import org.springframework.cloud.config.server.EnableConfigServer;
+
+		@EnableConfigServer
+		@SpringBootApplication
+		public class Application {
+
+			public static void main(String[] args) {
+				SpringApplication.run(Application.class, args);
+			}
+
+		}
+
+	Create application.properties
+		server.port=8888
+		spring.cloud.config.server.git.uri=https://github.com/Vaishali-Tapaswi/demo
+	
+	Run--->
+
+
+--------------------------------------------------------------------
 Lab 1 - Dependency (Day1.demo1.RestProvider, Day2.demo1.Service1
 	- Maven - Day3.demo6.ApiGateway
 		Dependency - API Gateway
