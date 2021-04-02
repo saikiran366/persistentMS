@@ -1,0 +1,6 @@
+Lab 1 - Dependency (Day1.demo1.RestProvider, Day2.demo1.Service1
+	- Maven - Day3.demo6.ApiGateway
+		Dependency - API Gateway
+	
+	https://spring.io/guides/gs/gateway/ -> http://localhost:8080, http://localhost:8085
+	
