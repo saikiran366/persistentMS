@@ -18,14 +18,16 @@ Lab 1 - Dependency (Day1.demo1.RestProvider, Day2.demo1.Service1
 
 				@Bean
 				public RouteLocator  myRoutes(RouteLocatorBuilder builder) {
-					return builder.routes()
-						.route(p -> p
-							.path("demo1")
-							.uri("http://localhost:8080"))
-						.route(p -> p
-							.path("demo2")
-							.uri("http://localhost:8085"))
-						.build();
+				    RouteLocator routelocator =builder.routes()
+					.route(p -> p
+					    .path("/demo1")
+					    .uri("http://localhost:8080/demo1/")) //http://localhost:8080/demo1 
+					.route(p -> p
+					    .path("/demo2")
+					    .uri("http://localhost:8085/demo2/")) //http://localhost:8085/demo2
+					.build();
+				    System.out.println(routelocator.getRoutes().buffer());
+				    return routelocator;
 				}
 				
 				public static void main(String[] args) {
