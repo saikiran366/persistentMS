@@ -24,7 +24,23 @@ Lab 2 - Maven project
 		spring.cloud.config.server.git.uri=https://github.com/Vaishali-Tapaswi/demo
 	
 	Run--->
+	Maven Project = Day3.demo3.ConfigClient
+		Dependencies -  Config Client, Web , Actuator (maven -> dep. hierarchy and validate)
+		
+		Write ConfigClientApplication
+			package demo;
 
+			import org.springframework.boot.SpringApplication;
+			import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+			@SpringBootApplication
+			public class ConfigClientApplication {
+
+				public static void main(String[] args) {
+					SpringApplication.run(ConfigClientApplication.class, args);
+				}
+
+			}
 
 --------------------------------------------------------------------
 Lab 1 - Dependency (Day1.demo1.RestProvider, Day2.demo1.Service1
