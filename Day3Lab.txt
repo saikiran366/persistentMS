@@ -67,7 +67,10 @@ Lab 2 - Maven project
 			management.security.enabled=false
 			management.endpoints.web.exposure.include=*
 
+		Modify RestController to have @RefreshScope annotation
 		
+		postman -> http://localhost:8080/actuator/refresh (post)
+			
 		
 --------------------------------------------------------------------
 Lab 1 - Dependency (Day1.demo1.RestProvider, Day2.demo1.Service1
