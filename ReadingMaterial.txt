@@ -17,3 +17,5 @@ https://qconsf.com/sf2014/system/files/presentation-slides/QConSF-MicroServices-
 https://microservices.io/patterns/apigateway.html 
 
 https://spring.io/guides/gs/gateway
+
+loading properties in spring boot - https://www.baeldung.com/properties-with-spring
