@@ -1,3 +1,20 @@
+Lab 4 - Pull image to test
+	docker pull vaishalitapaswi/persist
+	docker run -p 8080:8080 vaishalitapaswi/persist
+	
+	
+Lab 3 -  Create new image from spring boot application
+	dockerfile
+		FROM openjdk:8u171-alpine
+		COPY demo.jar /home/demo.jar
+		EXPOSE 8080
+		CMD ["java","-jar","/home/demo.jar"]
+
+	copy demo.jar (from eclipse - fat/standalone jar)
+
+	docker build -t aahello .
+	
+	
 Lab 2 -  create new image
 
 Automate
