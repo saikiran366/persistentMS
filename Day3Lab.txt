@@ -44,9 +44,17 @@ Lab 3 - Security
 			}
 		}
 	Run -> will ask to login/password
+	Create application.yml file 
+	 spring:
+	  security:
+	    oauth2:
+	      client:
+		registration:
+		  github:
+		    client-id: 5bc36f88b4f36ca2cc38
+		    client-secret: a2b4a7a4756f327463dea2f284fb3d0d04b533a8
 	
-	
-	
+	Run application to see github auth page and check our own application.
 	
 ---------------------------------------------------------
 Lab 2 - Maven project
