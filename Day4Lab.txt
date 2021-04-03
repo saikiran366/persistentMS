@@ -9,6 +9,18 @@ Lab 1 -local docker / Katakoda
     docker run bitnami/tomcat
     docker ps
     
+Lab 2 -  create new image
+
+Automate
+1. Create a script (dockerfile)
+		FROM hello-world
+2. Run to create an image
+		docker build -t aahello .
+			-t - tag -> name of new image
+			. - directory -> build current directory
+3. Create a container from newimage
+	docker run aahello
+	
 
 
 
