@@ -1,0 +1,38 @@
+Lab 1 -local docker / Katakoda 
+    docker images
+    docker ps
+    docker pull hello-world
+    docker pull bitnami/tomcat
+    docker run hello-world
+    docker ps
+    docker ps -a
+    docker run bitnami/tomcat
+    docker ps
+    
+
+
+
+Docker Ref
+Class		Object
+Image		Container
+
+
+Image Collection(DockerHub)
+
+Download image
+	docker pull hello-world
+	
+Show images
+	docker images
+Show containers
+	docker ps
+
+Remove image
+	docker rmi imagename/id
+
+Create a container 
+	docker run imagename  // check if image available run it else download and run
+	docker run hello-world
+Stop a container
+	docker stop containerid
+	
